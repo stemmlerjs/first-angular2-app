@@ -24,5 +24,27 @@ Directive
     - we can use a directive to make a text box automatically grow when it recieves focus:
         <input type="text" autoGrow/>
 
-Video tutorial: https://www.youtube.com/watch?v=_-CD_5YhJTA        
+Video tutorial: https://www.youtube.com/watch?v=_-CD_5YhJTA  
+
+PROJECT FILES
+    boot.ts 
+        - bootstraps Angular and loads the root component into the DOM
+    app.component.ts
+        - the root component of our app
+    tsconfig.json
+        - typescript transpiler config for our project
+    typings.json
+        - gives us type checking and intellisense
+        - typescript definition file
+    
+    package.json   
+        - the start command runs typescript in watch mode AND it runs angular web server 
+            in lite mode concurrently.
+        
+All Typescript classes are essentially just JavaScript classes with decorators
+    on them.
+
+How Do We Use A Component In Another Component?
+    - We specify it as a directive attribute inside of our component.
+    - App
 
