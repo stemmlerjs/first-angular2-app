@@ -1,0 +1,28 @@
+Learning AngularJS
+
+Components
+    - every angular app has at least one component that we call the Root Component
+    - a component can contain other components as well.
+    - this helps us manage our view into more reusable parts.
+    - A component is a typescript class:
+        it can have properties and methods that hold the data for the view
+        - properies hold data
+        - methods perform the actions
+    - components are not attached to the DOM. 
+        - we use bindings and bind to the properties and methods of our views
+        - we never need a reference to a dom element in order to update it
+        - ie: we can do onClick() calls that are decoupled from the dom (this makes it very easy to unit test)
+    
+Services
+    - a class that does anything 
+
+Router
+    - decides what component to present to the user
+
+Directive
+    - we use directives to modify DOM elements and or extend their behaviour.
+    - we can use a directive to make a text box automatically grow when it recieves focus:
+        <input type="text" autoGrow/>
+
+Video tutorial: https://www.youtube.com/watch?v=_-CD_5YhJTA        
+
