@@ -1,7 +1,7 @@
 import {Directive, ElementRef, Renderer} from 'angular2/core'
 
 @Directive({
-    selector: '[autoGrow]',  // square brackets refers to an attribute
+    selector: '[autoGrow]',  // square brackets refers to an attribute (property-binding)
     host: {                  // We can specify the actions for this element
         '(focus)': 'onFocus()', // on focus, execute the onFocus() method
         '(blur)': 'onBlur()'

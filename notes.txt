@@ -1,54 +1,204 @@
-Learning AngularJS
+Property Binding
+------------------
+We bind DOM properties to our component properties
 
-Components
-    - every angular app has at least one component that we call the Root Component
-    - a component can contain other components as well.
-    - this helps us manage our view into more reusable parts.
-    - A component is a typescript class:
-        it can have properties and methods that hold the data for the view
-        - properies hold data
-        - methods perform the actions
-    - components are not attached to the DOM. 
-        - we use bindings and bind to the properties and methods of our views
-        - we never need a reference to a dom element in order to update it
-        - ie: we can do onClick() calls that are decoupled from the dom (this makes it very easy to unit test)
+There are 3 ways that Angular can translate property bindings into interpolation.
+1.) <img src="{{ imageUrl }}"/>
+2.) <img [src]="imageUrl" />
+3.) <img bind-src="imageUrl" />
+
+So which one should we use?
+    For Dynamic Properties: lets use #1 
+        - a good example is <h1>{{ title }}</h1>
+        - we could do this using #2 with <h1 [textContent]="title"></h1> through accessing the DOM element.
+            but we think that #1 is way cleaner
     
-Services
-    - a class that does anything 
+Property Binding works One-Way now.
+- Changes in the VIEW are no longer reflected back in the component.
 
-Router
-    - decides what component to present to the user
 
-Directive
-    - we use directives to modify DOM elements and or extend their behaviour.
-    - we can use a directive to make a text box automatically grow when it recieves focus:
-        <input type="text" autoGrow/>
 
-Video tutorial: https://www.youtube.com/watch?v=_-CD_5YhJTA  
+Class Binding
+------------------
 
-PROJECT FILES
-    boot.ts 
-        - bootstraps Angular and loads the root component into the DOM
-    app.component.ts
-        - the root component of our app
-    tsconfig.json
-        - typescript transpiler config for our project
-    typings.json
-        - gives us type checking and intellisense
-        - typescript definition file
+There are times when we want to add additional classes to an element based on the state of an underlying component.
+
+        import {Component} from  'angular2/core'
+
+        @Component({
+            selector: 'my-app',
+            template: `<button class="btn btn-primary" [class.active]="isActive">Submit</button>`
+        })
+
+        export class AppComponent() {
+            isActive = true;
+        }
+
+    - in this example, we can reference the DOM element through the []
+    - we point to the class attribute and then conditionally add the classname "active" based on the value of isActive
+
+
+Style Binding
+------------------
+
+Similarly to Class Binding, we can actually conditionally set inline styles!!
+
+        import {Component} from  'angular2/core'
+
+        @Component({
+            selector: 'my-app',
+            template: `<button class="btn btn-primary" 
+                [style.backgroundColor]="isActive ? 'blue' : '#6793A1'">
+                    Submit
+                </button>`
+        })
+
+        export class AppComponent() {
+            isActive = true;
+        }
+
+Event Binding
+------------------
+
+We can bind functions in our component to events! There are two different syntactic ways to do this shown below.
+
+        import {Component} from  'angular2/core'
+
+        @Component({
+            selector: 'my-app',
+            template: `<button (click)="onClick()">Submit</button>
+                       <button on-click="onClick()">Submit</button>
+            `
+        })
+
+        export class AppComponent() {
+            onClick() {
+                console.log("yeah!!!");
+            }
+        }
+
+If its hard to remember which does which, just remember that:
+      Event Binding -------> ()     since we invoke methods with a ()
+      Property Binding ----> []     since we typically access properties of an object through a [] 
+
+What if we need to get access to the event that took place? Like, what if we need the x and y coordinates or something?
+    We access this through a built in Angular parameter called $event
+
+        import {Component} from  'angular2/core'
+
+        @Component({
+            selector: 'my-app',
+            template: `<button (click)="onClick($event)">Submit</button>
+                       <button on-click="onClick($event)">Submit</button>
+            `
+        })
+
+        export class AppComponent() {
+
+            onClick($event) {
+                console.log("yeah!!!", $event.target);  // this prints out the DOM element that initiated the click
+            }
+        }
+
+OK. Now lets refresh on event propogation.
+When an event is emitted, the event gets propogated up until it is handled by an event handler and stops propogation.
+
+        import {Component} from  'angular2/core'
+
+        @Component({
+            selector: 'my-app',
+            template: `
+                <div (click)="onDivClick($event)">
+                    <button (click)="onClick($event)">Submit</button>
+                </div>
+            `
+        })
+
+        export class AppComponent() {
+            onDivClick($event) {
+                console.log("div event");
+            }
+
+            onClick($event) {
+                console.log("button event");
+            }
+        }
+
+    PRINTS OUT: 
+        button event
+        div event
+
+    It does this because of EVENT BUBBLING. Neither of these two events stop the event from propogating upwards.
+    Now if we did something like:
+
+
+        import {Component} from  'angular2/core'
+
+        @Component({
+            selector: 'my-app',
+            template: `
+                <div (click)="onDivClick($event)">
+                    <button (click)="onClick($event)">Submit</button>
+                </div>
+            `
+        })
+
+        export class AppComponent() {
+            onDivClick($event) {
+                console.log("div event");
+            }
+
+            onClick($event) {
+                $event.stopPropogation()
+                console.log("button event");
+            }
+        }
+
+    PRINTS OUT:
+        button event
+
+    Aha, it does this because we stop the event from propogating upwards.
+
+Two Way Binding
+------------------
+
+We use ngModel to bind a DOM (View) property to a Component Property.
+
+    WITHOUT NGMODEL
+        import {Component} from  'angular2/core'
+
+        @Component({
+            selector: 'my-app',
+            template: `<input type="text" 
+                [value]=title                                   // property binding
+                (input)="title = $event.target.value" />        // event binding
+                Preview -- {{ title }}
+            `
+        })
+
+        export class AppComponent() {
+            title = "Angular App"
+        } 
+
+    - This is how we do two-way binding in Angular2 WITHOUT NGMODEL
+    - there is an (input) action on an input field, when the event happens, we want to set component value to equal 
+        the value of the DOM element.
     
-    package.json   
-        - the start command runs typescript in watch mode AND it runs angular web server 
-            in lite mode concurrently.
-        
-All Typescript classes are essentially just JavaScript classes with decorators
-    on them.
+    WITH NGMODEL   
+        import {Component} from  'angular2/core'
 
-How Do We Use A Component In Another Component?
-    - We specify it as a directive attribute inside of our component.
-    - App
+        @Component({
+            selector: 'my-app',
+            template: `
+                <input type="text" [(ngModel)]="title"/> // applys BOTH Event binding AND property binding
+                <input type="text" bindon-ngModel="title"/> // another way to do it 
+            `
+        })
 
-How Do We Do ng-repeat now?
-    - this is introduced as *ngFor
-    - we do <li *ngFor="#x in items">
-    - and then we can reference something in this scope through 'x'
+        export class AppComponent() {
+            title = "Angular App"
+        }     
+
+    - Therefore, in Angular2, we don't have 2 way binding. We have one way binding. This is inherited from Flux architecture and
+        ensures that our apps are more predictable and easier to debug when things go wrong.
+    
