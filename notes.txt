@@ -52,6 +52,3 @@ How Do We Do ng-repeat now?
     - this is introduced as *ngFor
     - we do <li *ngFor="#x in items">
     - and then we can reference something in this scope through 'x'
-
-How Do Services Work Now? 
-    - 

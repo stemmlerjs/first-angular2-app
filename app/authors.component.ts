@@ -13,12 +13,12 @@ import  { AuthorsService } from './authors.service'
         </ul>
     `,
     providers: [AuthorsService]
-    })
+})
 
 export class AuthorsComponent {
     // Instance Vars
     title : string = 'Title of the Authors page'
-    authors;
+    authors: string[];
 
     constructor(authorsService: AuthorsService) {
         this.authors = authorsService.getAuthors();
