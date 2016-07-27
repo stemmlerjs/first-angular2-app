@@ -8,6 +8,7 @@ import { AuthorsComponent } from './authors.component'
     template: `<h1>Yo, this is a typescript app</h1>
                 <courses></courses>
                 <authors></authors>
+                
                 `
     ,
     directives: [CoursesComponent, AuthorsComponent] 
