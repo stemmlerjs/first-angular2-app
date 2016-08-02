@@ -202,3 +202,13 @@ We use ngModel to bind a DOM (View) property to a Component Property.
     - Therefore, in Angular2, we don't have 2 way binding. We have one way binding. This is inherited from Flux architecture and
         ensures that our apps are more predictable and easier to debug when things go wrong.
     
+
+Create a component called Tweet
+    - this will render the picture and the heart and the twitter handle and the text
+    - use Media Object from bootstrap for the picture. Use the Template Layout like we say earlier
+    - http://lorempixel.com/100/100/people?1 : to get a random picture
+    - create a service that returns a list of tweets (just hard code the tweet objects)
+    - use DI to inject the service into the 
+    - use *ngFor="#course from courses"
+
+

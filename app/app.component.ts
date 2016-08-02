@@ -4,6 +4,7 @@ import { AuthorsComponent } from './authors.component'
 import { StarFavouriteComponent } from './starFavourite.component'
 import { HeartComponent } from './heart.component'
 import { VoteComponent } from './vote.component'
+import { TweetslistComponent } from './tweets/tweetslist.component'
 
 // We include other components by adding them to the directives attribute
 @Component({
@@ -17,9 +18,11 @@ import { VoteComponent } from './vote.component'
                 </star>
                 <heart></heart>
                 <vote [voteCount]="10" [myVote]="0" (vote)="onVote($event)"></vote>
+                <tweetslist></tweetslist>
                 `
     ,
-    directives: [CoursesComponent, AuthorsComponent, StarFavouriteComponent, HeartComponent, VoteComponent] 
+    directives: [CoursesComponent, AuthorsComponent, 
+        StarFavouriteComponent, HeartComponent, VoteComponent, TweetslistComponent] 
 })
 
 export class AppComponent {
