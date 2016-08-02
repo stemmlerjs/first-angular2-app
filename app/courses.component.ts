@@ -1,7 +1,7 @@
 import { Component } from 'angular2/core'
 import { CourseService } from './course.service'
 import { AutoGrowDirective } from './auto-grow.directive'
-import { StarFavouriteDirective } from './star-favourite.directive'
+
 
 @Component({
     selector: 'courses',
@@ -9,7 +9,6 @@ import { StarFavouriteDirective } from './star-favourite.directive'
         <h2>Courses</h2>
             {{title}}    
         <input type="text" autoGrow/>
-        <i class="glyphicon" starFavourite></i>
         <ul>
             <li *ngFor="#course of courses">
                 {{course}}
@@ -17,7 +16,7 @@ import { StarFavouriteDirective } from './star-favourite.directive'
         </ul>
     `,
     providers: [CourseService],
-    directives: [AutoGrowDirective, StarFavouriteDirective]
+    directives: [AutoGrowDirective]
 })
 export class CoursesComponent {
     // Instance Vars

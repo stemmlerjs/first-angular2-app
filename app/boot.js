@@ -11,6 +11,7 @@ System.register(['angular2/platform/browser', './app.component'], function(expor
                 app_component_1 = app_component_1_1;
             }],
         execute: function() {
+            // This is where the application starts! We render the Root component.
             browser_1.bootstrap(app_component_1.AppComponent);
         }
     }
