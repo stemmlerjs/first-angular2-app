@@ -1,4 +1,4 @@
-System.register(['angular2/core', './courses.component', './authors.component', './starFavourite.component', './heart.component', './vote.component', './tweets/tweetslist.component'], function(exports_1, context_1) {
+System.register(['angular2/core', './courses.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './courses.component', './authors.component', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, courses_component_1, authors_component_1, starFavourite_component_1, heart_component_1, vote_component_1, tweetslist_component_1;
+    var core_1, courses_component_1;
     var AppComponent;
     return {
         setters:[
@@ -19,43 +19,19 @@ System.register(['angular2/core', './courses.component', './authors.component', 
             },
             function (courses_component_1_1) {
                 courses_component_1 = courses_component_1_1;
-            },
-            function (authors_component_1_1) {
-                authors_component_1 = authors_component_1_1;
-            },
-            function (starFavourite_component_1_1) {
-                starFavourite_component_1 = starFavourite_component_1_1;
-            },
-            function (heart_component_1_1) {
-                heart_component_1 = heart_component_1_1;
-            },
-            function (vote_component_1_1) {
-                vote_component_1 = vote_component_1_1;
-            },
-            function (tweetslist_component_1_1) {
-                tweetslist_component_1 = tweetslist_component_1_1;
             }],
         execute: function() {
             // We include other components by adding them to the directives attribute
             AppComponent = (function () {
                 function AppComponent() {
-                    this.post = {
-                        title: "sometitle",
-                        isFavourited: true
-                    };
+                    this.courses = ['Course 1', 'Course 2', 'Course 3',];
+                    this.viewMode = 'map';
                 }
-                AppComponent.prototype.onFavouriteChange = function ($event) {
-                    console.log($event.newValue);
-                };
-                AppComponent.prototype.onVote = function ($event) {
-                    console.log("My vote value was: " + $event.value);
-                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "<h1>Yo, this is a typescript app</h1>\n                <courses></courses>\n                <authors></authors>\n                <star \n                    [is-favourite]=\"post.isFavourited\"\n                    (change)=\"onFavouriteChange($event)\">\n                </star>\n                <heart></heart>\n                <vote [voteCount]=\"10\" [myVote]=\"0\" (vote)=\"onVote($event)\"></vote>\n                <tweetslist></tweetslist>\n                ",
-                        directives: [courses_component_1.CoursesComponent, authors_component_1.AuthorsComponent,
-                            starFavourite_component_1.StarFavouriteComponent, heart_component_1.HeartComponent, vote_component_1.VoteComponent, tweetslist_component_1.TweetslistComponent]
+                        template: "\n          <div *ngIf=\"courses.length > 0\">\n            List of courses\n          </div>\n          <div [hidden]=\"courses.length != 0\">\n            You don't have any courses yet.\n          </div>\n\n          <ul class=\"nav nav-pills\">\n            <li [class.active]=\"viewMode == 'map'\"><a (click)=\"viewMode = 'map'\">Map View</a></li>\n            <li [class.active]=\"viewMode == 'list'\"><a (click)=\"viewMode = 'list'\">List View</a></li>\n          </ul>\n          <div [ngSwitch]=\"viewMode\">\n            <template [ngSwitchWhen]=\"'map'\" ngSwitchDefault>Map View Content</template>\n            <template [ngSwitchWhen]=\"'list'\">List View Content</template>\n          </div>\n\n          <h3>ngFor example</h3>\n          <p>Notice that *ngFor uses the asterisk because the * denotes that the current host element is a template. See the next part.</p>\n          <ul>\n            <li *ngFor=\"#course of courses, #i = index\">\n              {{ i + 1}} - {{course | uppercase}}\n            </li>\n          </ul>\n\n          <h3>Doing ngFor without the * using raw remplates</h3>\n          <template ngFor [ngForOf]=\"courses\" #course #i=index>\n            <li>{{ i + 1}} - {{course}}</li>\n          </template>\n                ",
+                        directives: [courses_component_1.CoursesComponent]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
